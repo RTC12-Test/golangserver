@@ -34,5 +34,5 @@ jobs:
       role-to-assume: arn:aws:iam::677276076781:role/odic
       role-session-name: "acsdevrolesession"
       aws-region-name: us-east-1
-      docker-image-tag: ${{ needs.image-tag-dev.outputs.docker-image-tag }}
+      # docker-image-tag: ${{ needs.image-tag-dev.outputs.docker-image-tag }}
       sops-enable: true           
