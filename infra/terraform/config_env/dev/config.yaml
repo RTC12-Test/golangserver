@@ -4,7 +4,7 @@ org_name: "acs"
 app_name: "sso"
 aws_vpc_id: "vpc-060f02b7488c8743e"
 aws_subnet: ["subnet-05cac359db01d4243","subnet-056275e2497e3d297","subnet-0a10ba0e5a4ad8ea9","subnet-0832e266df7e77080","subnet-0ff18f2af5b9ab7c0", "subnet-09d229ef6fd031d28"]
-aws_ecs_cluster_name: "acs-sso-dev-ecs-cluster"
+aws_ecs_cluster_name: "acs"
 service_name: "test"
 aws_sg_ids: ["sg-09df7d7c9e4073202"]
 
