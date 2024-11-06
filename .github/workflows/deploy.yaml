@@ -30,18 +30,18 @@ jobs:
       ecr-repo-name: acs-sso-test-dev-ecr
       push: true
 
-  # Deploying it to ECS in dev
-  docker_deploy_dev:
-    name: Deploy
-    needs: ["docker_image_build_dev"]
-    uses: RTC12-Test/my-sso-infra/.github/workflows/ecs-deploy.yaml@feature/secrets
-    with:
-      env: dev
-      role-to-assume: arn:aws:iam::677276076781:role/odic
-      role-session-name: "acsdevrolesession"
-      aws-region-name: us-east-1
-      service-name: acs-sso-test-svc-dev-ecs-service
-      task_name: acs-sso-test-dev-task-definition
-      cluster-name: acs-sso-dev-ecs-cluster
-      container-name: dev_test_service
-      docker-image-url: ${{ needs.docker_image_build_dev.outputs.docker-image-url}}
+  # # Deploying it to ECS in dev
+  # docker_deploy_dev:
+  #   name: Deploy
+  #   needs: ["docker_image_build_dev"]
+  #   uses: RTC12-Test/my-sso-infra/.github/workflows/ecs-deploy.yaml@feature/secrets
+  #   with:
+  #     env: dev
+  #     role-to-assume: arn:aws:iam::677276076781:role/odic
+  #     role-session-name: "acsdevrolesession"
+  #     aws-region-name: us-east-1
+  #     service-name: acs-sso-test-svc-dev-ecs-service
+  #     task_name: acs-sso-test-dev-task-definition
+  #     cluster-name: acs-sso-dev-ecs-cluster
+  #     container-name: dev_test_service
+  #     docker-image-url: ${{ needs.docker_image_build_dev.outputs.docker-image-url}}
