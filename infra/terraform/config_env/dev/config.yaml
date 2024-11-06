@@ -1,0 +1,66 @@
+# Common variables
+region: "us-east-1"
+org_name: "acs"
+app_name: "sso"
+aws_vpc_id: "vpc-060f02b7488c8743e"
+aws_subnet: ["subnet-05cac359db01d4243","subnet-056275e2497e3d297","subnet-0a10ba0e5a4ad8ea9","subnet-0832e266df7e77080","subnet-0ff18f2af5b9ab7c0", "subnet-09d229ef6fd031d28"]
+aws_ecs_cluster_name: "acs-sso-dev-ecs-cluster"
+service_name: "test"
+aws_sg_ids: ["sg-09df7d7c9e4073202"]
+
+# Security Group variables
+aws_sg_configuration:
+     # ECS Security Group
+   - name: "app-ecs"
+     aws_sg_ingress_rules :
+      -  aws_sg_ingress_cidr_ipv4: ["0.0.0.0"]
+         aws_sg_inbound_port: [8080]
+         aws_sg_enable_cidr_ipv4: false
+         aws_reference_sg: [""]
+         aws_sg_protocal: [""]         
+     aws_sg_egress_rules:
+      -  aws_sg_egress_cidr_ipv4: ["0.0.0.0/0"]
+         aws_sg_inbound_port: [-1]    
+         aws_sg_enable_cidr_ipv4: true
+         aws_reference_sg: [""]
+         aws_reference_sg_id: [""]
+         aws_sg_protocal: [""]
+
+# ECS task definition variables 
+aws_task_execution_role: "arn:aws:iam::677276076781:role/ecsTaskExecutionRole"
+task_definition_variables:
+  aws_ecs_task_definition_cpu: 512
+  aws_ecs_task_definition_memory: 1024
+  aws_ecr_repo_url: "677276076781.dkr.ecr.us-east-1.amazonaws.com/acs-sso-test-dev-ecr"
+  container_port: 8443
+  docker_image_tag: "docker_image_tag"
+  aws_ecr_falcon_image_tag: "latest"
+  testkey: "envtest"
+  aws_secret_manager_arn: "arn:aws:secretsmanager:us-east-1:677276076781:secret:test-OqGaFq:"  
+  containers:
+    - name: dev_test_service
+      portMappings:
+        - containerPort: 8080
+          hostPort: 8080
+      essential: true
+      mountPoints:
+        - containerPath: "/tmp/CrowdStrike"
+          readOnly: false
+          sourceVolume: "crowdstrike-falcon-volume"
+  volumes:
+    bind:
+      - name: "crowdstrike-falcon-volume"
+    efs:
+      - name: "test"
+        efs_id: "fs-006d39817365f68c3"
+        session_path: "/"
+
+# ECS service variables
+aws_ecs_service_task_desired_count: 2
+aws_ecs_service_enable_execute_command: true
+
+# Tags
+division: "st"
+department: "a86065"
+technicalContact: "SSO-SUPPORT@acs.org"
+map_migrated_tag: "mig42366"

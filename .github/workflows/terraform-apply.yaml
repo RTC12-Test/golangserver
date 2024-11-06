@@ -1,0 +1,54 @@
+name: Apply
+# Runs the workflow on the below events:
+# 1. On push event to develop branch
+# 2. On push event to main branch
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read
+
+on:
+  push:
+    branches: ["main", "develop"]
+    paths:
+      - infra/**
+
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Target environment"
+        required: true
+        type: choice
+
+        options:
+          - stage
+          - dev
+          - prod
+
+jobs:
+ # This call ecs-fetch-image-tag for getting docker image tag for dev
+  # image-tag-dev:
+  #   name: Prerequisite
+  #   uses: RTC12-Test/my-sso-infra/.github/workflows/ecs-fetch-image-tag.yaml@feature/secrets
+  #   with:
+  #     role-to-assume: "arn:aws:iam::201431874166:role/acs-sso-dev-oidcsrole"
+  #     role-session-name: "acsdevrolesession"
+  #     aws-region-name: "us-east-1"
+  #     task-name: acs-sso-test-dev-task-definition
+  #     service-name: acs-sso-test-svc-dev-ecs-service
+  #     cluster-name: acs-sso-dev-ecs-cluster
+  #     ecr-repo-name: acs-sso-test-dev-ecr
+  #     container-name: dev_test_service
+
+# This calls terraform-apply.yaml to do TF apply on dev environment.
+  terraform-apply-dev:
+    name: Terraform apply develop
+    # needs: [image-tag-dev]
+    uses: RTC12-Test/my-sso-infra/.github/workflows/terraform-apply.yaml@feature/secrets
+    with:
+      env: dev
+      role-to-assume: "arn:aws:iam::201431874166:role/acs-sso-dev-oidcsrole"
+      role-session-name: "acsdevrolesession"
+      aws-region-name: "us-east-1"
+      docker-image-tag: ${{ needs.image-tag-dev.outputs.docker-image-tag }}
+      sops-enable: true
+           

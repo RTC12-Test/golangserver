@@ -1,0 +1,47 @@
+name: ECS App Deploy 
+# Runs the workflow on the below events:
+# 1. On push event to develop branch
+# 2. On push event to main branch
+# 3. On creation of tag
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prerequisite:
+    name: Create Docker image tag
+    uses: RTC12-Test/my-sso-infra/.github/workflows/create-image-tag.yaml@feature/secrets
+    
+  # Creating  Docker Image in dev
+  docker_image_build_dev:
+    name: Build Docker image
+    if: github.ref == 'refs/heads/develop'
+    needs: ["maven_build","prerequisite"]
+    uses: RTC12-Test/my-sso-infra/.github/workflows/docker-build.yaml@feature/secrets
+    with:
+      docker-image-file-path: Dockerfile
+      docker-image-tag: ${{ needs.prerequisite.outputs.docker-image-tag }}
+      role-to-assume: arn:aws:iam::677276076781:role/odic
+      role-session-name: "acsdevrolesession"
+      aws-region-name: "us-east-1"
+      ecr-repo-name: acs-sso-test-dev-ecr
+      push: true
+
+  # Deploying it to ECS in dev
+  docker_deploy_dev:
+    name: Deploy
+    needs: ["docker_image_build_dev"]
+    uses: RTC12-Test/my-sso-infra/.github/workflows/ecs-deploy.yaml@feature/secrets
+    with:
+      env: dev
+      role-to-assume: arn:aws:iam::677276076781:role/odic
+      role-session-name: "acsdevrolesession"
+      aws-region-name: us-east-1
+      service-name: acs-sso-test-svc-dev-ecs-service
+      task_name: acs-sso-test-dev-task-definition
+      cluster-name: acs-sso-dev-ecs-cluster
+      container-name: dev_test_service
+      docker-image-url: ${{ needs.docker_image_build_dev.outputs.docker-image-url}}
