@@ -67,7 +67,6 @@ module "task-definition" {
         portMappings = local.configs.task_definition_variables.containers[0].portMappings
         essential    = local.configs.task_definition_variables.containers[0].essential
         image        = "${local.configs.task_definition_variables.aws_ecr_repo_url}:${lookup(local.configs.task_definition_variables, "docker_image_tag")}"
-        entryPoint   = local.configs.task_definition_variables.containers[0].entryPoint
         mountPoints  = local.configs.task_definition_variables.containers[0].mountPoints
         secrets = {
           "secret" = "${local.configs.task_definition_variables.aws_secret_manager_arn}secrets::"
