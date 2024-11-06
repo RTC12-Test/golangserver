@@ -17,12 +17,14 @@ aws_sg_configuration:
          aws_sg_inbound_port: [8080]
          aws_sg_enable_cidr_ipv4: true
          aws_reference_sg: [""]
+         aws_reference_sg_id: [""]
          aws_sg_protocal: [""]         
      aws_sg_egress_rules:
       -  aws_sg_egress_cidr_ipv4: ["0.0.0.0/0"]
          aws_sg_inbound_port: [-1]    
          aws_sg_enable_cidr_ipv4: true
          aws_reference_sg: [""]
+         aws_reference_sg_id: [""]
          aws_sg_protocal: [""]
 
 # ECS task definition variables 
