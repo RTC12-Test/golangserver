@@ -41,6 +41,6 @@ jobs:
       aws-region-name: us-east-1
       service-name: acs-sso-test-svc-dev-ecs-service
       task_name: acs-sso-test-dev-task-definition
-      cluster-name: acs-sso-dev-ecs-cluster
+      cluster-name: acs
       container-name: dev_test_service
       docker-image-url: ${{ needs.docker_image_build_dev.outputs.docker-image-url}}

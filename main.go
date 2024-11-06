@@ -7,7 +7,7 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1> hello world! </h1>"))
+	w.Write([]byte("<h1> hello world narendar! </h1>"))
 	w.Write([]byte(fmt.Sprintf("Envrionment env: %s<br> Secret env: %s", os.Getenv("test"), os.Getenv("secret"))))
 }
 func main() {
