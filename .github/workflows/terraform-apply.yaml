@@ -35,5 +35,4 @@ jobs:
       role-session-name: "acsdevrolesession"
       aws-region-name: "us-east-1"
       docker-image-tag: ${{ needs.image-tag-dev.outputs.docker-image-tag }}
-      sops-enable: true
-           
+      sops-enable: true           
