@@ -15,7 +15,7 @@ jobs:
     name: Prerequisite
     uses: RTC12-Test/my-sso-infra/.github/workflows/ecs-fetch-image-tag.yaml@feature/secrets
     with:
-      role-to-assume: "arn:aws:iam::201431874166:role/acs-sso-dev-oidcsrole"
+      role-to-assume: arn:aws:iam::677276076781:role/odic
       role-session-name: "acsdevrolesession"
       aws-region-name: "us-east-1"
       task-name: acs-sso-test-dev-task-definition
