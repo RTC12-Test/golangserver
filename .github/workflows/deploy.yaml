@@ -18,8 +18,7 @@ jobs:
   # Creating  Docker Image in dev
   docker_image_build_dev:
     name: Build Docker image
-    if: github.ref == 'refs/heads/develop'
-    needs: ["maven_build","prerequisite"]
+    needs: ["prerequisite"]
     uses: RTC12-Test/my-sso-infra/.github/workflows/docker-build.yaml@feature/secrets
     with:
       docker-image-file-path: Dockerfile
