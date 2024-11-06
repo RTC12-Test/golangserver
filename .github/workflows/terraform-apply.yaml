@@ -20,7 +20,7 @@ jobs:
       aws-region-name: "us-east-1"
       task-name: acs-sso-test-dev-task-definition
       service-name: acs-sso-test-svc-dev-ecs-service
-      cluster-name: acs-sso-dev-ecs-cluster
+      cluster-name: acs
       ecr-repo-name: acs-sso-test-dev-ecr
       container-name: dev_test_service
 

@@ -103,11 +103,6 @@ module "ecs-svc" {
   aws_ecs_service_container_port     = local.configs.task_definition_variables.containers[0].portMappings[0].containerPort
   aws_ecs_service_sg_id              = [module.security_group.aws_sg_id["app-ecs"], local.configs.aws_sg_ids[0]]
   aws_ecs_cluster_name               = data.aws_ecs_cluster.get_ecs_cluster.cluster_name
-  aws_lb_green_target_group_name     = module.target-groups["accountsvcgreen"].tg_name
-  aws_lb_blue_target_group_name      = module.target-groups["accountsvcblue"].tg_name
-  aws_nlb_listener                   = lookup(local.configs, "aws_lb_listener_arn")
-  aws_lb_active_target_group_arn     = module.target-groups["accountsvcblue"].tg_arn
-  sso_infra_deploy_arn               = lookup(local.configs, "sso_infra_deploy_arn")
   aws_ecs_service_task_desired_count = lookup(local.configs, "aws_ecs_service_task_desired_count")
   enable_execute_command             = lookup(local.configs, "aws_ecs_service_enable_execute_command")
 }
