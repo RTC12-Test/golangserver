@@ -13,9 +13,9 @@ aws_sg_configuration:
      # ECS Security Group
    - name: "app-ecs"
      aws_sg_ingress_rules :
-      -  aws_sg_ingress_cidr_ipv4: ["0.0.0.0"]
+      -  aws_sg_ingress_cidr_ipv4: ["0.0.0.0/0"]
          aws_sg_inbound_port: [8080]
-         aws_sg_enable_cidr_ipv4: false
+         aws_sg_enable_cidr_ipv4: true
          aws_reference_sg: [""]
          aws_sg_protocal: [""]         
      aws_sg_egress_rules:
