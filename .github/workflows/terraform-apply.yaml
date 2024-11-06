@@ -31,8 +31,8 @@ jobs:
     uses: RTC12-Test/my-sso-infra/.github/workflows/terraform-apply.yaml@feature/secrets
     with:
       env: dev
-      role-to-assume: "arn:aws:iam::201431874166:role/acs-sso-dev-oidcsrole"
+      role-to-assume: arn:aws:iam::677276076781:role/odic
       role-session-name: "acsdevrolesession"
-      aws-region-name: "us-east-1"
+      aws-region-name: us-east-1
       docker-image-tag: ${{ needs.image-tag-dev.outputs.docker-image-tag }}
       sops-enable: true           
